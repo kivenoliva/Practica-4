@@ -276,7 +276,8 @@ Enemy.prototype.step = function(dt) {
 }
 
 // Metodo draw, que anadimos al prototipo para que cada instancia de
-// Enemy no tenga una copia de el
+// Enemy no tenga una copia de el /// Para que, si tengo 5 naves enemigas, en vez de que cada nave tenga su propio metodo draw, cada nave tenemos en su prototipo
+//un puntero que apunta a una unica funcion draw. Asi ahorramos memoria
 Enemy.prototype.draw = function(ctx) {
     SpriteSheet.draw(ctx,this.sprite,this.x,this.y);
 }

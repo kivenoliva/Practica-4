@@ -61,3 +61,45 @@
 
 */
 
+
+
+
+describe("Clase Enemy", function(){
+    var canvas, ctx;
+
+    beforeEach(function(){
+	    loadFixtures('index.html');
+
+	    canvas = $('#game')[0];
+	    expect(canvas).toExist();
+
+	    ctx = canvas.getContext('2d');
+	    expect(ctx).toBeDefined();
+	
+	    oldGame = Game;
+    });
+
+    afterEach(function(){
+	    Game = oldGame;
+    }); 
+    
+    /*
+    it ("Crear enemigos", function(){
+    
+        
+
+    });
+
+
+    */
+
+
+
+
+
+});
+
+
+
+
+
