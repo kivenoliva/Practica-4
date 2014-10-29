@@ -83,23 +83,95 @@ describe("Clase Enemy", function(){
 	    Game = oldGame;
     }); 
     
-    /*
+    
     it ("Crear enemigos", function(){
     
+        SpriteSheet = {
+            map : {enemy_purple: { sx: 37, sy: 0, w: 42, h: 43, frames: 1 }}
+        }        
         
+        
+        var enemies = {
 
+            basic: { x: 100, y: -50, sprite: 'enemy_purple', B: 100, C: 2 , E: 100 }
+
+        };
+        
+        var miEnemigo = new Enemy (enemies.basic);          //Pruebo la llamada con un parámetro.
+        
+        expect(miEnemigo.x).toEqual(100);
+        
+        var miEnemigo_dos = new Enemy (enemies.basic, { x: 200 });      //Pruebo la llamada con 2 parametros.
+        
+        expect(miEnemigo_dos.x).toEqual(200);
+        
+        
     });
-
-
-    */
-
-
-
+    
+    it ( "step", function (){
+    
+        Game = {width: 320, height: 480};
+    
+        SpriteSheet = {
+            map : {enemy_purple: { sx: 37, sy: 0, w: 42, h: 43, frames: 1 }}
+            
+        } 
+        
+        var enemies = {
+            basic: { x: 100, y: -80, sprite: 'enemy_purple', B: 100, C: 2 , E: 100 },
+            fuera_tablero: {x: 100, y: 500 , sprite: 'enemy_purple', B: 100, C: 2 , E: 100}
+        };
+        
+        var miEnemigo = new Enemy (enemies.basic);        
+        
+        miEnemigo.step(1);
+        
+        expect(Math.floor(miEnemigo.x)).toEqual(190);
+        expect(Math.floor(miEnemigo.y)).toEqual(20);
+        
+        
+        
+        var boarddummie = {     
+            remove: function (){}
+        };
+        
+        var miEnemigo_dos = new Enemy (enemies.fuera_tablero);
+        miEnemigo_dos.board = boarddummie;
+        
+        spyOn(miEnemigo_dos.board, "remove"); 
+        miEnemigo_dos.step(1);                           
+         
+        expect(miEnemigo_dos.board.remove).toHaveBeenCalled();
+    });
+    
+    
+    it ( "draw", function (){
+    
+        SpriteSheet = {
+            map : {enemy_purple: { sx: 37, sy: 0, w: 42, h: 43, frames: 1 }},
+            draw : function () {}
+        } 
+        
+        var enemies = {
+            basic: { x: 100, y: -80, sprite: 'enemy_purple', B: 100, C: 2 , E: 100 },    
+        };
+        
+        var miEnemigo = new Enemy (enemies.basic);        
+        spyOn(SpriteSheet, "draw");
+        miEnemigo.draw(ctx);
+        expect(SpriteSheet.draw).toHaveBeenCalled();
+    
+    });
 
 
 });
 
-
+/*E2 = new Enemy({ x: 100, y: 500, sprite: 'enemy_purple', B: 100, C: 2 , E: 100 });
+E2.board = {remove: function () {}}
+spyOn(E2.board, "remove");
+E2.step(dt);
+expect(E2.board.remove).toHaveBeenCalled()
+*/
 
 
 
