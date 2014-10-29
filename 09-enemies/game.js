@@ -180,6 +180,7 @@ var PlayerShip = function() {
 
 	        // Se añaden al gameboard 2 misiles 
 	        this.board.add(new PlayerFireball(this.x+this.w,this.y+this.h/2));
+	        
 	    }
 	}
 
