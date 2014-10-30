@@ -121,8 +121,8 @@ var Starfield = function(speed,opacity,numStars,clear) {
 // poder ser dibujada desde el bucle principal del juego
 var PlayerShip = function() { 
     var up = false;
-    var upb = false;
-    var upn = false;
+    var up_b = false;
+    var up_n = false;
     this.w =  SpriteSheet.map['ship'].w;
     this.h =  SpriteSheet.map['ship'].h;
     this.x = Game.width/2 - this.w / 2;
@@ -161,25 +161,25 @@ var PlayerShip = function() {
 	    }
 	    
 	    //Disparos bola de fuego con b y n
-	    if(!Game.keys['b']) upb = true;
-	        if(up && Game.keys['b'] && this.reload < 0) {
+	    if(!Game.keys['b']) up_b = true;
+	        if(up_b && Game.keys['b'] && this.reload < 0) {
 	            // Esta pulsada la tecla de disparo y ya ha pasado el tiempo reload
-	            upb = false;
+	            up_b = false;
 	            this.reload = this.reloadTime;
 
 	        // Se añaden al gameboard 2 misiles 
-	        this.board.add(new PlayerFireball(this.x,this.y+this.h/2));
+	        this.board.add(new PlayerFireball(this.x,this.y+this.h/2,-2));
 	        
 	    }
 	
-	    if(!Game.keys['n']) uph = true;
-	        if(up && Game.keys['n'] && this.reload < 0) {
+	    if(!Game.keys['n']) up_n = true;
+	        if(up_n && Game.keys['n'] && this.reload < 0) {
 	            // Esta pulsada la tecla de disparo y ya ha pasado el tiempo reload
-	            upn = false;
+	            up_n = false;
 	            this.reload = this.reloadTime;
 
 	        // Se añaden al gameboard 2 misiles 
-	        this.board.add(new PlayerFireball(this.x+this.w,this.y+this.h/2));
+	        this.board.add(new PlayerFireball(this.x+this.w,this.y+this.h/2,2));
 	        
 	    }
 	}
@@ -211,17 +211,21 @@ PlayerMissile.prototype.draw = function(ctx)  {
     SpriteSheet.draw(ctx,'missile',this.x,this.y);
 };
 
-var PlayerFireball = function(x,y) {
+var PlayerFireball = function(x,y,mov_parabolico) {
     this.w = SpriteSheet.map['fireball'].w;
     this.h = SpriteSheet.map['fireball'].h;
     this.x = x - this.w/2; 
-
     this.y = y - this.h; 
-    this.vy = -700;
+    this.parabola = mov_parabolico;
+    this.vy = -1700;
 };
 
 PlayerFireball.prototype.step = function(dt)  {
-    this.y += this.vy * dt;
+
+    this.vx= 80*this.parabola; // Para que tenga una parabola
+    this.x += this.vx * dt; //Añado para que se mueva en el eje x
+    this.y += this.vy * dt; // ya venia
+    this.vy += 150; //"potencia"
     if(this.y < -this.h) { this.board.remove(this); }
 };
 
