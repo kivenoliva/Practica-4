@@ -38,22 +38,32 @@ describe("Clase FireBall", function(){
     
     }); 
     
-    /*
+    
+   
     it ("step", function(){
         var fireBall1 = new PlayerFireball(200,480,2);
-        var fireBall2 = new PlayerFireball(15,15,-2);
-        var fireBall3 = new PlayerFireball(25,25,2);
         
-        var dt = 0.1;
-        fireBall1.step(dt);
+        fireBall1.step(0.1);
         
         expect(fireBall1.vx).toBe(160);
         expect(fireBall1.x).toBe(184);
         expect(fireBall1.y).toBe(246);
+        
+        var boarddummie = {     //Game board en el que estaria el misil.
+            remove: function (){}
+        };
+        
+        var fireBall2 = new PlayerFireball(200,480,2);
+        
+        fireBall2.board = boarddummie;
+        spyOn(fireBall2.board, "remove")
+        
+        fireBall2.step(1);
+        expect(fireBall2.board.remove).toHaveBeenCalled();
     
     });
     
-    */
+    
     
     
 });
