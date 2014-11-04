@@ -166,12 +166,6 @@ describe("Clase Enemy", function(){
 
 });
 
-/*E2 = new Enemy({ x: 100, y: 500, sprite: 'enemy_purple', B: 100, C: 2 , E: 100 });
-E2.board = {remove: function () {}}
-spyOn(E2.board, "remove");
-E2.step(dt);
-expect(E2.board.remove).toHaveBeenCalled()
-*/
 
 
 

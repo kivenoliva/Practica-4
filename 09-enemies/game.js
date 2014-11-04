@@ -12,7 +12,7 @@ var enemies = {
     // B, C y E substituirán a los valores por defecto definidos en la
     // variable baseParameters del constructor Enemy(). Ver
     // comentarios en el código del constructor al final del fichero.
-    basic: { x: 100, y: -50, sprite: 'enemy_purple', B: 100, C: 2 , E: 100 }
+    basic: { x: 100, y: -50, sprite: 'enemy_purple', B: 100, C: 4 , E: 100 }
 
 };
 
@@ -195,9 +195,9 @@ var PlayerShip = function() {
 var PlayerMissile = function(x,y) {
     this.w = SpriteSheet.map['missile'].w;
     this.h = SpriteSheet.map['missile'].h;
-    this.x = x - this.w/2; 
+    this.x = x + this.w/2; 
 
-    this.y = y - this.h; 
+    this.y = y + this.h; 
     this.vy = -700;
 };
 

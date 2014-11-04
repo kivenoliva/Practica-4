@@ -67,10 +67,10 @@ describe("Prueba de funcion PlayerMissile", function(){
         var dt = 0.1;
         misil.step(dt);
         
-        expect(misil.y).toEqual(20);
+        expect(misil.y).toEqual(40);
         
         //Pruebo que ahora this.y < -this.h para que haga llamar a remove.
-        misil2 = new PlayerMissile(10,50);
+        misil2 = new PlayerMissile(1,5);
         
         var boarddummie = {     //Game board en el que estaria el misil.
             remove: function (){}
