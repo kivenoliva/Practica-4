@@ -85,7 +85,7 @@
 
 */
 
-describe("Clase GameBoard", function(){
+describe("CollisionsSpec", function(){
 
 var canvas, ctx;
 
@@ -98,6 +98,17 @@ var canvas, ctx;
 	    ctx = canvas.getContext('2d');
 	    expect(ctx).toBeDefined();
 	
+	    
+	    
+	    SpriteSheet = {
+            draw : function () {},
+            map : {ship: { sx: 0, sy: 0, w: 37, h: 42, frames: 1 },
+                   missile: { sx: 0, sy: 30, w: 2, h: 10, frames: 1 },
+                   enemy_purple: { sx: 37, sy: 0, w: 42, h: 43, frames: 1 },
+                   explosion: { sx: 0, sy: 64, w: 64, h: 64, frames: 12 },
+                   fireball: { sx: 0, sy: 64, w: 64, h: 64, frames: 12 }}
+        } 
+        
 	    oldGame = Game;
 	    
     });
@@ -106,10 +117,92 @@ var canvas, ctx;
 	    Game = oldGame;
     }); 
     
-    it ("Misil-->Nave = Desaparecen", function(){
+    it ("Misil-->Nave = Desaparece Nave", function(){
+     
+     
+       board = new GameBoard();
+       var enemies = {
+           basic: { x: 100, y: -50, sprite: 'enemy_purple', B: 100, C: 4, E: 100, health: 10 }
+       };    
+        
+
+        enemigo = new Enemy(enemies.basic);
+        board.add(enemigo);
+        misil = new PlayerMissile(this.x,this.y+this.h/2)
+        board.add(misil);
          
-        board.add(1);
-        expect(board.objects[0]).toEqual(1);
+        board.step(0.1);
+        
+        expect(board.objects.length).toEqual(1);
+        expect(board.objects[0].sprite).toEqual("explosion"); 
+        expect(enemigo.health).toEqual(0);
+     
+     
+    });
+    
+    it ("Misil-->Nave = No Desaparece Nave", function(){
+    
+    
+        board = new GameBoard();
+        var enemies = {
+           basic: { x: 100, y: -50, sprite: 'enemy_purple', B: 100, C: 4, E: 100, health: 20 }
+        };    
+        
+
+        enemigo = new Enemy(enemies.basic);
+        board.add(enemigo);
+        misil = new PlayerMissile(this.x,this.y+this.h/2)
+        board.add(misil);
+         
+        board.step(0.1);
+        
+        expect(board.objects.length).toEqual(1);
+        expect(board.objects[0].sprite).toEqual("enemy_purple");
+        expect(enemigo.health).toEqual(10);
+    
+    });
+    
+    it ("Bola de Fuego", function(){
+    
+       board = new GameBoard();
+       var enemies = {
+           basic: { x: 100, y: -50, sprite: 'enemy_purple', B: 100, C: 4, E: 100, health: 60 }
+       };    
+        
+
+        enemigo = new Enemy(enemies.basic);
+        board.add(enemigo);
+        bola = new PlayerFireball(this.x+this.w,this.y+this.h/2,2);
+        board.add(bola);
+         
+        board.step(0.1);
+        
+        expect(board.objects.length).toEqual(2);
+        expect(board.objects[0].sprite).toEqual("fireball"); 
+        expect(board.objects[1].sprite).toEqual("explosion"); 
+        expect(enemigo.health).toBe(-9999939);
+        
+    });
+    
+    it ("Nave enemiga --> Nave jugador", function(){
+    
+       board = new GameBoard();
+       var enemies = {
+           basic: { x: 141.5, y: 428, sprite: 'enemy_purple', B: 100, C: 4, E: 100, health: 60 }
+       };    
+        
+
+       enemigo = new Enemy(enemies.basic);
+       board.add(enemigo);
+       nave_Jugador = new PlayerShip();
+       board.add(nave_Jugador);
+       
+       board.step(0.1);
+       
+       expect(board.objects.length).toEqual(0);
+       
+       
+    
     });
 
 

@@ -288,6 +288,7 @@ Enemy.prototype.step = function(dt) {
     // Actualizamos la edad
     this.t += dt;
 
+
     // El patrón de movimiento lo dictan las ecuaciones que se utilizarán
     // para calcular las componentes x e y de su velocidad: vx e vy:
     
