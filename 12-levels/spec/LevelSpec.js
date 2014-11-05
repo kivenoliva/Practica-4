@@ -68,17 +68,22 @@ describe("LevelSpec", function(){
 	    expect(ctx).toBeDefined();	
         
 	    oldGame = Game;
+	    oldSpriteSheet = SpriteSheet;
 	    
     });
 
     afterEach(function(){
 	    Game = oldGame;
+	    SpriteSheet = oldSpriteSheet;
     }); 
     
     
-    // ----------- PRUEBAS UNITARIAS -------------------------//
+    // ----------- PRUEBAS UNITARIAS ------------------------- //
     
     it ("Level.step", function(){
+    
+        board = new GameBoard();
+        
         var LevelDummie = [
             // Comienzo, Fin, Frecuencia, Tipo, Override
             [ 0, 4000, 500, 'step' ],
@@ -101,15 +106,35 @@ describe("LevelSpec", function(){
             explosion: { sx: 0, sy: 64, w: 64, h: 64, frames: 12 },
             fireball: { sx: 0, sy: 64, w: 64, h: 64, frames: 1 }
         };
-        
+                       
         var callback = function() {};
         
         var level = new Level(LevelDummie, callback);
-        var board = new GameBoard();
         board.add(level);
+                            
+        level.step(5);
+        expect(level.t).toBe(5000);
+        expect(level.levelData.length).toBe(LevelDummie.length -1 );
         
+        spyOn(level.board, "add");  
+        level.step(7); //YA debe crear uno porque  6000 < 7000
+        expect(level.board.add).toHaveBeenCalled();
+        
+        //no hay enemigos, pasa el tiempo del ultimo, asique se acaba el tablero
+        spyOn(level, "callback");  
+        level.board.cnt[OBJECT_ENEMY] = 0;
+        level.step(26);
+        expect(level.callback).toHaveBeenCalled();               
     });
-
-
+    
+    
+    
+    it("Despues del nivel 1, nivel 2, despues ganar", function() {
+             
+        //SpriteSheet.load(sprites,startGame);
+           
+            
+    
+    });
 
 });
