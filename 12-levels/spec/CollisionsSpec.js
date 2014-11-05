@@ -199,7 +199,7 @@ var canvas, ctx;
        
        board.step(0.1);
        
-       expect(board.objects.length).toEqual(0);
+       expect(board.objects.length).toEqual(1);         //pORQUE EN EL 12 AÑADIMOS EXPLOSION CUANDO DESAPARECE NAVE DEL JUGADOR
        
        
     

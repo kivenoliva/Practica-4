@@ -79,6 +79,25 @@ var level1 = [
     [ 22000,    25000, 400,         'wiggle',   { x: 100 } ]
 ];
 
+var level2 = [
+  //  Comienzo, Fin,   Frecuencia,  Tipo,       Override
+    [ 0,        4000,  500,         'step'                 ],
+    [ 0,        4000,  500,         'step'                 ],
+    [ 6000,     13000, 800,         'ltr'                  ],
+    [ 10000,    16000, 400,         'circle'               ],
+    [ 17800,    20000, 500,         'straight', { x: 50  } ],
+    [ 18200,    20000, 500,         'straight', { x: 90  } ],
+    [ 18200,    20000, 500,         'straight', { x: 10  } ],
+    [ 18200,    20000, 500,         'straight', { x: 90  } ],
+    [ 18200,    20000, 500,         'straight', { x: 10  } ],
+    [ 22000,    25000, 400,         'wiggle',   { x: 150 } ],
+    [ 22000,    25000, 400,         'wiggle',   { x: 100 } ],
+    [ 22000,    25000, 400,         'wiggle',   { x: 150 } ],
+    [ 22000,    25000, 400,         'wiggle',   { x: 100 } ],
+    [ 22000,    25000, 400,         'wiggle',   { x: 150 } ],
+    [ 22000,    25000, 400,         'wiggle',   { x: 100 } ]
+];
+
 
 
 var playGame = function() {
@@ -88,8 +107,26 @@ var playGame = function() {
     // Se un nuevo nivel al tablero de juego, pasando la definición de
     // nivel level1 y la función callback a la que llamar si se ha
     // ganado el juego
-    board.add(new Level(level1, winGame));
+    board.add(new Level(level1, ANivel2));
     Game.setBoard(3,board);
+};
+
+var playNivel2 = function() {
+    var board = new GameBoard();
+    board.add(new PlayerShip());
+
+    // Se un nuevo nivel al tablero de juego, pasando la definición de
+    // nivel level1 y la función callback a la que llamar si se ha
+    // ganado el juego
+    board.add(new Level(level2, winGame));
+    Game.setBoard(3,board);
+};
+
+//Llamada cuando terminas un nivel y vas a otro
+var ANivel2 = function() {
+    Game.setBoard(3,new TitleScreen("NIVEL 2, READY?", 
+                                    "Press fire to play again",
+                                    playNivel2));
 };
 
 // Llamada cuando han desaparecido todos los enemigos del nivel sin
@@ -252,8 +289,12 @@ PlayerShip.prototype.type = OBJECT_PLAYER;
 
 // Llamada cuando una nave enemiga colisiona con la nave del usuario
 PlayerShip.prototype.hit = function(damage) {
+    
     if(this.board.remove(this)) {
-	loseGame();
+        this.board.add(new Explosion(this.x + this.w/2, 
+                                     this.y + this.h/2));
+    	
+    	setTimeout(function (){loseGame()}, 700);
     }
 };
 
