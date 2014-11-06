@@ -68,13 +68,12 @@ describe("LevelSpec", function(){
 	    expect(ctx).toBeDefined();	
         
 	    oldGame = Game;
-	    oldSpriteSheet = SpriteSheet;
 	    
     });
 
     afterEach(function(){
 	    Game = oldGame;
-	    SpriteSheet = oldSpriteSheet;
+	    
     }); 
     
     
@@ -130,10 +129,36 @@ describe("LevelSpec", function(){
     
     
     it("Despues del nivel 1, nivel 2, despues ganar", function() {
-             
-        //SpriteSheet.load(sprites,startGame);
+    
+        
+        
+        /*
+        SpriteSheet.load = function(spriteData,callback) { 
+	            this.map = spriteData;
+	            this.image = new Image();
+	            this.image.onload = callback;
+	            this.image.src = 'images/sprites.png';
+        };
+        
+        //level1 = [[ 0, 1000, 500, 'step'],];
+        //level2 = [[ 0, 500, 500, 'step'],];
+
            
-            
+        Game.initialize("game",sprites,startGame);
+        Game.keys['right'] = true;
+        spyOn(window, "playGame").andCallThrough();
+        spyOn(window, "winGame").andCallThrough();
+        spyOn(window, "ANivel2").andCallThrough();
+        spyOn(window, "playNivel2").andCallThrough();
+        Game.loop(); //Empieza el bucle
+        expect(window.playGame).not.toHaveBeenCalled(); //todavia no empieza 
+        Game.keys['fire'] = false;
+        waits(100);   
+        
+        
+        */
+        
+          
     
     });
 
