@@ -132,7 +132,7 @@ describe("LevelSpec", function(){
     
         
         
-        /*
+        
         SpriteSheet.load = function(spriteData,callback) { 
 	            this.map = spriteData;
 	            this.image = new Image();
@@ -156,7 +156,7 @@ describe("LevelSpec", function(){
         waits(100);   
         
         
-        */
+        
         
           
     
